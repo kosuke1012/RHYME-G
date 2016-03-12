@@ -9,7 +9,7 @@ PARSE_TEXT_ENCODING = 'utf-8'
 
 ### Functions
 def main():
-    sample_u = u"漢字"
+    sample_u = u"センサ漢字せんさ"
     word_dict = parse(sample_u)
     print word_dict
     #print "Nouns:", ",".join(words_dict['nouns'])
@@ -30,10 +30,13 @@ def parse(unicode_string):
     adjs = []
     pos = u""
     while node:
-        st = node.feature.split(",")[8]
-        # unicode 型に戻す
-        word = node.surface.decode("utf-8")
-        pos += st.decode("utf-8")
+        st = node.feature.split(",")
+               # unicode 型に戻す
+        if len(st)==7:  #katakana
+            word = node.surface.decode("utf-8")
+            pos +=word
+        elif len(st)==9: #kanji or hiragana
+            pos += st[8].decode("utf-8")
         node = node.next
 
     return pos
