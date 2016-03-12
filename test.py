@@ -9,7 +9,7 @@ PARSE_TEXT_ENCODING = 'utf-8'
 
 ### Functions
 def main():
-    sample_u = u"アイウエオ"
+    sample_u = u"漢字"
     word_dict = parse(sample_u)
     print word_dict
     #print "Nouns:", ",".join(words_dict['nouns'])
