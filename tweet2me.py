@@ -3,19 +3,20 @@
 import twitter
 import twitkey
 
-""" init """  
-CONSUMER_KEY = twitkey.twkey['cons_key']
-CONSUMER_SECRET = twitkey.twkey['cons_sec']
-ACCESS_TOKEN_KEY = twitkey.twkey['accto_key']
-ACCESS_TOKEN_SECRET = twitkey.twkey['accto_sec']
 
-api = twitter.Api(consumer_key=CONSUMER_KEY,
-                  consumer_secret=CONSUMER_SECRET,
-                  access_token_key=ACCESS_TOKEN_KEY,
-                  access_token_secret=ACCESS_TOKEN_SECRET)
+def init():
+    CONSUMER_KEY = twitkey.twkey['cons_key']
+    CONSUMER_SECRET = twitkey.twkey['cons_sec']
+    ACCESS_TOKEN_KEY = twitkey.twkey['accto_key']
+    ACCESS_TOKEN_SECRET = twitkey.twkey['accto_sec']
 
+    api = twitter.Api(consumer_key=CONSUMER_KEY,
+                      consumer_secret=CONSUMER_SECRET,
+                      access_token_key=ACCESS_TOKEN_KEY,
+                      access_token_secret=ACCESS_TOKEN_SECRET)
+    return api
 
-def get_tweets():
+def get_tweets(api):
     tweets = api.GetMentions()
     return tweets
 
@@ -24,7 +25,7 @@ def get_list(filename):
     keys = f.readline().strip("\t")
     id_list = []
     for i in f:
-        id_list.append(int(i))
+        id_list.append(str(i.strip("\n")))
     f.close()
     return id_list
 
@@ -46,7 +47,8 @@ def set_list(filename,id_list):
     f.close()
 
 def test(filename):
-    tweets = get_tweets()
+    api = init()
+    tweets = get_tweets(api)
     id_new = []
     for tweet in tweets:
         id_new.append(tweet.id)
