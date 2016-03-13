@@ -47,7 +47,7 @@ def parse(unicode_string):
 def roma_boin (roma):
     new_roma =""
     for i in roma:
-        if i=="a" or i =="i" or i=="u" or i=="e" or i=="o" or i=="n":
+        if i=="a" or i =="i" or i=="u" or i=="e" or i=="o" :
             new_roma += i
     
     return new_roma
