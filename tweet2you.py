@@ -3,6 +3,7 @@
 import twitter
 import twitkey
 import tweet2me as t2m
+import WordConverter as wc
 
 
 def init():
@@ -19,8 +20,10 @@ def init():
     
 
 def get_tweets(api):
-    tweets = api.GetReplies()
+    tweets = api.GetReplies(count=5)
     return tweets
+
+
 
 def test(fname2me, fname2you):
     api = init()
@@ -38,6 +41,21 @@ def test(fname2me, fname2you):
     in_reply_to_status_id_old = t2m.get_list(fname2you)
     in_reply_to_status_id_notmatch = t2m.notmatch_id(in_reply_to_status_id_new, in_reply_to_status_id_old)
     #t2m.set_list(fname2you, in_reply_to_status_id_notmatch)
+    print in_reply_to_status_id_notmatch
+    for reply in in_reply_to_status_id_notmatch:
+        print reply
+    texts =[]
+    for tweet in tweets:
+        if tweet.in_reply_to_status_id in in_reply_to_status_id_notmatch:
+            texts.append(tweet.text.split(" ")[1])
+            print tweet.text
+    for text in texts:
+        print text
+        print wc.nihongo_boin(text)
+
+    
+    
+    
     
 if __name__ == '__main__':
     test("2me_list.txt","2you_list.txt")
