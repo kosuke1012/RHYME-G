@@ -21,25 +21,45 @@ class Tweet2bot:
                           access_token_secret=ACCESS_TOKEN_SECRET)
         
 
-    def get_id_tweets2you_TL(self):
-        id_tweets2you = self.api.GetReplies(count=5)
+    def get_tweets2you_TL(self):
+        #bot -> someone 
+        tweets2you = self.api.GetReplies(count=5)
         #count=5 means last 5 tweets to you
-        
+        return tweet2you
+
+    def get_tweets2me_TL(self):
+        #someone -> bot
+        tweet2me = self.api.GetReplies(count=5)
+        #count=5 means last 5 tweets to me
+        return tweet2me
+
+    def get_id_tweets2you_TL(self):
+        id_tweets2you = []
+        tweets2you = self.get_tweets2you_TL()
+        for tweet in tweets2you:
+            id_tweets2you.append(tweet.in_reply_to_status_id)
+            #api:in_reply_to_status_id
         return id_tweets2you
 
     def get_id_tweets2me_TL(self):
-        id_tweets2me = self.api.GetReplies(count=5)
-        #count=5 means last 5 tweets to me
-        
+        id_tweets2me = []
+        tweet2me = self.get_tweets2me_TL()
+        for tweet in tweets2me:
+            id_tweets2me.append(tweet.id)
+            #api:id
         return id_tweets2me
 
     def get_id_tweet2you_DB(self):
         #record from db
+        id_tweet2you_DB = []
         print ""
+        return id_tweet2you_DB
 
     def get_id_tweet2me_DB(self):
         #record from db
+        id_tweet2me_DB = []
         print ""
+        return id_tweet2me_DB
     
     def notmatch_id(self, id_new, id_old):
         if len(id_old) < 0:
@@ -81,11 +101,17 @@ class Tweet2bot:
                 trim_text = text.strip(at_)
         return trim_text
 
+    def tweet(self):
+        print ""
+    
     def run(self):
         #get tweet
-        
+        tweets2me = self.get_tweets2me_TL()
+        id_tweets2me = self.get_id_tweets2me_TL()
         #compare tweet with DB
-
+        id_tweet2me_DB = self,get_id_tweet2me_DB()
+        id_notmatch = self.notmatch_id(id_tweet2me, id_tweet2me_DB)
+        
         #text2me -> text2you (Word Converter)
         
         #tweet2you
