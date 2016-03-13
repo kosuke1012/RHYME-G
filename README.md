@@ -1,4 +1,4 @@
-# RHYME-G
+﻿# RHYME-G
 
 ###WordConverter.py
 日本語文字列の変換を行うモジュール
@@ -11,3 +11,12 @@
 カタカナをローマ字に
 *roma_boin
 ローマ字を母音に
+
+###tweet2bot.py
+DBをもとにbotがツイートするクラス
+
+*notmatch_id
+DBとTLから得たidを比較する
+
+*trim_text
+ツイートの＠を削除する
